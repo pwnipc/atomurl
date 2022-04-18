@@ -1,9 +1,13 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'maven-publish'
 }
 
 group 'com.chalie.atomurl'
 version 'v1.0-Beta'
+
+mainClassName = "App"
 
 repositories {
     mavenCentral()
@@ -21,4 +25,15 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            group 'com.chalie.atomurl'
+            version '1.0'
+
+            from components.java
+        }
+    }
 }

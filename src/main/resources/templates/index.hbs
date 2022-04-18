@@ -1,4 +1,84 @@
 {{#partial "content"}}
-    <h1>Sanity Check</h1>
+{{#if atomurl}}
+    <div class="container">
+        <h2 align="center" style="margin-top:3%;">AtomURL</h2><br>
+        {{#if message}}
+            <div class="alert alert-success" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+        <form class="card rounded-20 bg-g-1 mb-0 align-items-center"  action="/update" method="post">
+
+            <div class="col-md-6" style="margin-top:3%">
+                <label for="inputURL" class="form-label"> Title</label>
+                {{#if atomurl.title}}
+                    <input type="text" class="form-control" id="title"  name="title" value="{{atomurl.title}}" >
+                {{else}}
+                    <input type="text" placeholder="Add a title." class="form-control" id="title"  name="title">
+                {{/if}}
+            </div>
+            <br>
+            <div class="col-md-6 d-flex bd-highlight">
+                <div class="flex-grow-1 bd-highlight"><input type="url" class="form-control" id="copy_text"  name="longUrl" value="https://at0murl.herokuapp.com/{{atomurl.alias}}" readonly></div>
+                <div class="p-2 flex-shrink-0 bd-highlight"><button type="button" class="btn btn-success" onclick="Copy()"><i class="fa fa-copy"></i>Copy</button></div>
+            </div>
+
+            <script>
+                var copy_text_val = document.querySelector('#copy_text');
+                function Copy() {
+                   copy_text_val.select();
+                   document.execCommand("copy");
+                   alert("AtomUrl Copied to clipboard");
+
+                }
+                </script>
+            <input type="text" class="form-control" id="id"  name="id" value="{{atomurl.id}}" style="display:none">
+            <br>
+            <div class="col-md-6">
+                <label for="basic-url" class="form-label">CUSTOMIZE BACK-HALF (Optional)</label>
+                <div class="input-group col-md-6">
+                    <span class="input-group-text" id="basic-addon3">https://at0murl.herokuapp.com/</span>
+                    <input type="text" placeholder="alias" class="form-control" id="alias" name="alias" value="{{atomurl.alias}}" aria-describedby="basic-addon3">
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top:3%">
+                <label for="inputURL" class="form-label"> Expanded URL</label>
+                <input type="url" placeholder="" class="form-control" id="longUrl"  name="longUrl" value="{{atomurl.long_url}}" readonly>
+            </div>
+            <br>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-danger" formaction="/delete">Delete AtomURL!</button>
+                <button type="submit" class="btn btn-success">Save Changes!</button>
+            </div>
+        </form>
+    </div>
+
+{{else}}
+    <div class="container">
+        <h2 align="center" style="margin-top:3%;">AtomURL</h2><br>
+        {{#if message}}
+            <div class="alert alert-success" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+        <form class="card rounded-20 bg-g-1 mb-0 align-items-center" action="/new" method="post">
+            <div class="col-md-6" style="margin-top:3%">
+                <label for="inputURL" class="form-label"> Enter a long URL to make an AtomURL</label>
+                <input type="url" placeholder="" class="form-control" id="longUrl"  name="longUrl" required>
+            </div><br>
+            <div class="col-md-6">
+                <label for="basic-url" class="form-label">Customize your link (Optional)</label>
+                <div class="input-group col-md-6">
+                    <span class="input-group-text" id="basic-addon3">https://at0murl.herokuapp.com</span>
+                    <input type="text" placeholder="alias" class="form-control" id="alias" name="alias" aria-describedby="basic-addon3">
+                </div>
+            </div>
+            <br>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success">Make AtomURL!</button>
+            </div>
+        </form>
+    </div>
+{{/if}}
 {{/partial}}
 {{> "layout.hbs"}}
